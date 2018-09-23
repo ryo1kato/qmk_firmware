@@ -64,6 +64,8 @@ enum macro_keycodes {
 #else
 #  define KC__P   KC_P
 #endif
+#define KC__X     LT(_SYMBOL,KC_X)
+#define KC__DOT   LT(_SYMBOL,KC_DOT)
 
 // Modifier
 #define KC__LSFT  LSFT_T(KC_GRAVE)
@@ -71,11 +73,11 @@ enum macro_keycodes {
 #define KC__Z     LSFT_T(KC_Z)
 #define KC__SLSH  RSFT_T(KC_SLSH)
 #define KC__EQL   RALT_T(KC_EQL)
+#define KC__LCMD  LCMD_T(KC_GRV)
 
 // Shortcuts
 #define KC_HEAD   LCMD(KC_HOME) // macOS start of line
 #define KC_TAIL   LCMD(KC_END)  // macOS end of line
-#define KC_SCSHOT SCMD(4)       // macOS ranged screen shot
 #define KC_PREV   SCMD(KC_LBRC)
 #define KC_NEXT   SCMD(KC_RBRC)
 
@@ -86,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LCTL,     A,     S,     D,     F,     G,                      H,     J,     K,     L, _SCLN,  QUOT,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _LSFT,    _Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT, _SLSH, _RSFT,\
+      _LSFT,    _Z,    _X,     C,     V,     B,                      N,     M,  COMM,  _DOT, _SLSH, _RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                    LCMD,   SPC, _BSPC,      ENT, _MINS,  _EQL \
                               //`--------------------'  `--------------------'
@@ -96,9 +98,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
         ESC,     1,     2,     3,     4,     5,                      7,     8,     9,     0,  MINS,  BSPC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____,    F1,    F2,    F3,    F4,     6,                   BSPC,  MINS,  LBRC,  RBRC,  COLN, _____,\
+      _____, XXXXX, XXXXX, XXXXX, XXXXX,     6,                   BSPC,  MINS,  LBRC,  RBRC,  COLN, _____,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   PLUS,   ENT,  COMM,   DOT, _____, _____,\
+      _____,    F1,    F2,    F3,    F4,    F5,                   PLUS,   ENT,  COMM,   DOT, _____, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____,  LSFT,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
@@ -130,7 +132,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_EMACS] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-      _____, XXXXX, XXXXX,  TAIL,SCSHOT, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX,    UP, _____,\
+      _____, XXXXX, XXXXX,  TAIL, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX,    UP, _____,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       _____,  HEAD, XXXXX,   DEL, RIGHT, XXXXX,                   BSPC, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
@@ -142,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MOUSE] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-      _____, _____, _____,  WH_U,  ACL0,  ACL1,                   MS_U,  MS_D,  MS_U,  MS_R, _____, _____,\
+      _____, _____, _____,  WH_U,  ACL0,  ACL1,                   MS_L,  MS_D,  MS_U,  MS_R, _____, _____,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       _____, _____,  WH_L,  WH_D,  WH_R,  ACL2,                   BTN1,  BTN2,  BTN3, _____, _____, _____,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
