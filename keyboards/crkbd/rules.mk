@@ -74,3 +74,5 @@ SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 CUSTOM_MATRIX = yes
 
 DEFAULT_FOLDER = crkbd/rev1
+
+CFLAGS += -Wfatal-errors
