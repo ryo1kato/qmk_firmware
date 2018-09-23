@@ -74,6 +74,7 @@ enum macro_keycodes {
 #define KC__SLSH  RSFT_T(KC_SLSH)
 #define KC__EQL   RALT_T(KC_EQL)
 #define KC__LCMD  LCMD_T(KC_GRV)
+//#define KC__SPC   RSFT_T(KC_SPC)
 
 // Shortcuts
 #define KC_HEAD   LCMD(KC_HOME) // macOS start of line
@@ -96,11 +97,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_DIGIT] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        ESC,     1,     2,     3,     4,     5,                      7,     8,     9,     0,  MINS,  BSPC,\
+        ESC,     1,     2,     3,     4,     5,                      7,     8,     9,     0,  MINS,   EQL,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX, XXXXX, XXXXX,     6,                   BSPC,  MINS,  LBRC,  RBRC,  COLN, _____,\
+      _____, XXXXX, XXXXX, XXXXX, XXXXX,     6,                   BSPC,   EQL,  LBRC,  RBRC,  COLN, _____,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____,    F1,    F2,    F3,    F4,    F5,                   PLUS,   ENT,  COMM,   DOT, _____, _____,\
+      _____,    F1,    F2,    F3,    F4,    F5,                   PLUS,   ENT,  COMM,   DOT,  SLSH, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____,  LSFT,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
@@ -108,11 +109,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYMBOL] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        GRV,  EXLM,    AT,  HASH,   DLR,  PERC,                   AMPR,  ASTR,  LPRN,  RPRN,  MINS,  BSPC,\
+        GRV,  EXLM,    AT,  HASH,   DLR,  PERC,                   AMPR,  ASTR,  LPRN,  RPRN,   EQL,  BSPC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       TILD, XXXXX, XXXXX, XXXXX, XXXXX,  CIRC,                   BSPC, XXXXX,  LBRC,  RBRC,  PLUS, XXXXX,\
+      _____,   GRV, XXXXX, XXXXX, XXXXX,  CIRC,                   BSPC, XXXXX,  LCBR,  RCBR,  PLUS, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX, XXXXX, XXXXX,   ENT,                  XXXXX,   ENT,  LBRC,  RBRC, _____, _____,\
+      _____,  TILD, XXXXX, XXXXX, XXXXX,   ENT,                  XXXXX,   ENT,  LBRC,  RBRC, _____, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
@@ -132,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_EMACS] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-      _____, XXXXX, XXXXX,  TAIL, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX,    UP, _____,\
+      _____, XXXXX, XXXXX,  TAIL, XXXXX, XXXXX,                   PGUP, XXXXX,   TAB, XXXXX,    UP, _____,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       _____,  HEAD, XXXXX,   DEL, RIGHT, XXXXX,                   BSPC, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
