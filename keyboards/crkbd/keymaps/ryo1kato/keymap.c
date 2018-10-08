@@ -38,11 +38,9 @@ enum custom_keycodes {
 #ifdef MOUSEKEY_ENABLE
   ,MOUSE
 #endif
+  ,KC_DOTSLASH
 };
 
-enum macro_keycodes {
-  KC_SAMPLEMACRO,
-};
 
 #define KC______  KC_TRNS
 #define KC_XXXXX  KC_NO
@@ -55,26 +53,28 @@ enum macro_keycodes {
 #define KC_RESET  RESET
 
 // Layer
-#define KC__MINS  LT(_DIGIT, KC_MINS)
+#define KC__MINS  LT(_DIGIT,  KC_MINS)
 #define KC__BSPC  LT(_SYMBOL, KC_BSPC)
-#define KC__SCLN  LT(_VIM, KC_SCLN)
-#define KC__TAB   LT(_EMACS, KC_TAB)
+#define KC__X     LT(_SYMBOL, KC_X)
+#define KC__DOT   LT(_SYMBOL, KC_DOT)
+#define KC__SCLN  LT(_VIM,    KC_SCLN)
+#define KC__TAB   LT(_EMACS,  KC_TAB)
+#define KC__Q     LT(_EMACS,  KC_Q)
 #ifdef MOUSEKEY_ENABLE
-#  define KC__P   LT(_MOUSE, KC_P)
+#  define KC__P   LT(_MOUSE,  KC_P)
 #else
 #  define KC__P   KC_P
 #endif
-#define KC__X     LT(_SYMBOL,KC_X)
-#define KC__DOT   LT(_SYMBOL,KC_DOT)
 
 // Modifier
-#define KC__LSFT  LSFT_T(KC_GRAVE)
-#define KC__RSFT  RSFT_T(KC_BSLASH)
+#define KC__LSFT  LSFT_T(KC_LBRC)
+#define KC__RSFT  RSFT_T(KC_RBRC)
 #define KC__Z     LSFT_T(KC_Z)
-#define KC__SLSH  RSFT_T(KC_SLSH)
 #define KC__EQL   RALT_T(KC_EQL)
-#define KC__LCMD  LCMD_T(KC_GRV)
-//#define KC__SPC   RSFT_T(KC_SPC)
+#define KC__LCMD  LCMD_T(KC_ESC)
+#define KC__LCTL  LCTL_T(KC_GRV)
+#define KC__ENT   LSFT_T(KC_ENT)
+#define KC_CTLTAB CTL_T(KC_TAB)
 
 // Shortcuts
 #define KC_HEAD   LCMD(KC_HOME) // macOS start of line
@@ -82,16 +82,19 @@ enum macro_keycodes {
 #define KC_PREV   SCMD(KC_LBRC)
 #define KC_NEXT   SCMD(KC_RBRC)
 
+// Keycode Alias
+#define KC_DOTSLA  KC_DOTSLASH
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-       _TAB,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,    _P,  BSPC,\
+       _TAB,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,    _P,BSLASH,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LCTL,     A,     S,     D,     F,     G,                      H,     J,     K,     L, _SCLN,  QUOT,\
+      _LCTL,     A,     S,     D,     F,     G,                      H,     J,     K,     L, _SCLN,  QUOT,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _LSFT,    _Z,    _X,     C,     V,     B,                      N,     M,  COMM,  _DOT, _SLSH, _RSFT,\
+      _LSFT,     Z,    _X,     C,     V,     B,                      N,     M,  COMM,  _DOT,  SLSH, _RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                   LCMD,   SPC, _BSPC,      ENT, _MINS,  _EQL \
+                                   LCMD,   SPC, _BSPC,     _ENT, _MINS,  _EQL \
                               //`--------------------'  `--------------------'
   ),
 
@@ -109,11 +112,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYMBOL] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        GRV,  EXLM,    AT,  HASH,   DLR,  PERC,                   AMPR,  ASTR,  LPRN,  RPRN,   EQL,  BSPC,\
+        ESC,  EXLM,    AT,  HASH,   DLR,  PERC,                   AMPR,  ASTR,  LPRN,  RPRN,   EQL,  BSPC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       _____,   GRV, XXXXX, XXXXX, XXXXX,  CIRC,                   BSPC, XXXXX,  LCBR,  RCBR,  PLUS, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____,  TILD, XXXXX, XXXXX, XXXXX,   ENT,                  XXXXX,   ENT,  LBRC,  RBRC, _____, _____,\
+      _____,  TILD, XXXXX, XXXXX, XXXXX,   ENT,                  XXXXX,   ENT,  LBRC,  RBRC,  SLSH, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
@@ -133,11 +136,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_EMACS] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-      _____, XXXXX, XXXXX,  TAIL, XXXXX, XXXXX,                   PGUP, XXXXX,   TAB, XXXXX,    UP, _____,\
+      XXXXX, XXXXX, XXXXX,  TAIL, XXXXX, XXXXX,                   PGUP, XXXXX,   TAB, XXXXX,    UP, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____,  HEAD, XXXXX,   DEL, RIGHT, XXXXX,                   BSPC, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+      XXXXX,  HEAD, XXXXX,   DEL, RIGHT, XXXXX,                   BSPC, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX, XXXXX,  PGDN,  LEFT,                   DOWN,   ENT,  PREV,  NEXT, XXXXX, XXXXX,\
+      XXXXX, XXXXX, XXXXX, XXXXX,  PGDN,  LEFT,                   DOWN,   ENT,  PREV,  NEXT, XXXXX, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
@@ -145,11 +148,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MOUSE] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-      _____, _____, _____,  WH_U,  ACL0,  ACL1,                   MS_L,  MS_D,  MS_U,  MS_R, _____, _____,\
+      XXXXX, XXXXX, XXXXX,  WH_U, XXXXX, XXXXX,                   MS_L,  MS_D,  MS_U,  MS_R, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, _____,  WH_L,  WH_D,  WH_R,  ACL2,                   BTN1,  BTN2,  BTN3, _____, _____, _____,\
+      XXXXX, XXXXX,  WH_L,  WH_D,  WH_R, XXXXX,                   BTN1,  BTN2,  BTN3, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, _____, _____, _____, _____, _____,                  _____, _____, _____, _____, _____, _____,\
+      XXXXX, XXXXX,  ACL0,  ACL1,  ACL2, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
@@ -229,17 +232,6 @@ void iota_gfx_task_user(void) {
   matrix_update(&display, &matrix);
 }
 
-define case_PROCESS_LT_break(layer) \
-    case layer:                     \
-      if (record->event.pressed) {  \
-        layer_on(_ ## layer);       \
-      } else {                      \
-        layer_off(_ ## layer);      \
-      }                             \
-      return false;                 \
-      break;
-
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     set_keylog(keycode, record);
@@ -247,36 +239,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch (keycode) {
-    case QWERTY:
+    case KC_DOTSLASH: //FIXME somehow this doesn't work
       if (record->event.pressed) {
-        persistent_default_layer_set(1UL<<_QWERTY);
+          SEND_STRING("./")
       }
       return false;
       break;
-    case_PROCESS_LT_break(DIGIT)
-    case_PROCESS_LT_break(SYMBOL)
-    case_PROCESS_LT_break(VIM)
-    case_PROCESS_LT_break(EMACS)
-    case_PROCESS_LT_break(MOUSE)
+#ifdef RGBLIGHT_ENABLE
     case RGB_MOD:
-      #ifdef RGBLIGHT_ENABLE
         if (record->event.pressed) {
           rgblight_mode(RGB_current_mode);
           rgblight_step();
           RGB_current_mode = rgblight_config.mode;
         }
-      #endif
       return false;
       break;
     case RGBRST:
-      #ifdef RGBLIGHT_ENABLE
         if (record->event.pressed) {
           eeconfig_update_rgblight_default();
           rgblight_enable();
           RGB_current_mode = rgblight_config.mode;
         }
-      #endif
       break;
+#endif
   }
   return true;
 }
