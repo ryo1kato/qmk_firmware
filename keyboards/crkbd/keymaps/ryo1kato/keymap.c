@@ -35,9 +35,8 @@ enum custom_keycodes {
   ,SYMBOL
   ,VIM
   ,EMACS
-#ifdef MOUSEKEY_ENABLE
   ,MOUSE
-#endif
+  ,RGBRST
   ,KC_DOTSLASH
 };
 
@@ -49,8 +48,20 @@ enum custom_keycodes {
 #define KC_SYMBOL SYMBOL
 #define KC_VIM    VIM
 #define KC_EMACS  EMACS
-
 #define KC_RESET  RESET
+
+/* RGB LED */
+#define KC_LRST RGBRST
+#define KC_LTOG RGB_TOG
+#define KC_LHUI RGB_HUI
+#define KC_LHUD RGB_HUD
+#define KC_LSAI RGB_SAI
+#define KC_LSAD RGB_SAD
+#define KC_LVAI RGB_VAI
+#define KC_LVAD RGB_VAD
+#define KC_LMOD RGB_MOD
+#define KC_LPLN RGB_MODE_PLAIN
+
 
 // Layer
 #define KC__MINS  LT(_DIGIT,  KC_MINS)
@@ -106,15 +117,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
         ESC,  EXLM,    AT,  HASH,   DLR,  PERC,                   AMPR,  ASTR,  LPRN,  RPRN,   EQL,  BSPC,\
       _____,   GRV, XXXXX, XXXXX, XXXXX,  CIRC,                   BSPC, XXXXX,  LCBR,  RCBR,  PLUS, _____,\
-      _____,  TILD, XXXXX, XXXXX, XXXXX,   ENT,                  XXXXX,   ENT,  LBRC,  RBRC,  SLSH, _____,\
+      _____,  TILD, XXXXX, XXXXX, XXXXX,   ENT,                  XXXXX,   ENT,  LBRC,  RBRC,DOTSLA, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ ),
                               //`--------------------'  `--------------------'
   [_VIM] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-      _____, _____, _____, _____, RESET, _____,                  _____, _____, _____, _____, _____, _____,\
-      _____, _____, _____, _____, _____, _____,                   LEFT,  DOWN,    UP, RIGHT, _____, _____,\
-      _____, _____, _____, _____, _____, _____,                  _____, _____, _____, _____, _____, _____,\
+      _____, _____, _____, _____, RESET,  LTOG,                  _____, _____, _____, _____, _____, _____,\
+      _____, _____,  LPLN, _____,  LHUD,  LHUI,                   LEFT,  DOWN,    UP, RIGHT, _____, _____,\
+      _____, _____, _____, _____,  LSAD,  LSAI,                   LRST,  LMOD,  LVAD,  LVAI, _____, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ ),
                               //`--------------------'  `--------------------'
@@ -208,17 +219,21 @@ void iota_gfx_task_user(void) {
   matrix_render_user(&matrix);
   matrix_update(&display, &matrix);
 }
+#endif //SSD1306OLED
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+# ifdef SSD1306OLED
   if (record->event.pressed) {
     set_keylog(keycode, record);
     // set_timelog();
   }
+#endif //SSD1306OLED
 
   switch (keycode) {
-    case KC_DOTSLASH: //FIXME somehow this doesn't work
+    case KC_DOTSLASH:
       if (record->event.pressed) {
-          SEND_STRING("./")
+          SEND_STRING("./");
       }
       return false;
       break;
@@ -243,4 +258,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-#endif
